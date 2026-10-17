@@ -30,8 +30,9 @@ nav [aria-current=true]{text-decoration:underline;text-decoration-color:var(--si
 .ln{display:block;overflow:hidden;padding-bottom:.04em}.ln:nth-child(2){margin-left:10vw}.ln:nth-child(3){margin-left:3vw}
 .ln span{display:block;transform:translateY(105%);transition:transform 1s var(--ease);transition-delay:calc(var(--i)*.08s)}
 body.ready .ln span{transform:none}
-#shoe{position:absolute;right:-10vw;bottom:0;width:85vw;max-width:900px;z-index:1;will-change:transform}
-#shoe img,.ph{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+#shoe{position:absolute;right:4vw;bottom:32px;width:min(46vw,600px);z-index:1;will-change:transform}
+#shoe img,.ph{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+#shoe img{border:2px solid var(--ink);box-shadow:10px 10px 0 var(--signal)}
 .blurb{position:relative;z-index:2;margin-top:48px;max-width:300px;display:flex;flex-direction:column;gap:12px}
 .btn{display:inline-block;width:fit-content;background:var(--ink);color:var(--bone);padding:8px 12px;transition:background .5s var(--ease),color .5s var(--ease)}
 .btn:hover{background:var(--signal);color:var(--ink)}
@@ -47,16 +48,38 @@ body.ready .ln span{transform:none}
 /* shop */
 .shop{padding:160px 16px 96px}
 .shop h1{font-size:clamp(5rem,22vw,22rem);white-space:nowrap;margin-bottom:64px}
-.grid{list-style:none;padding:0;display:grid;grid-template-columns:1fr;gap:64px 16px}
-@media(min-width:768px){.grid{grid-template-columns:repeat(12,1fr)}
-.grid li:nth-child(6n+1){grid-column:span 5}.grid li:nth-child(6n+2){grid-column:span 3;margin-top:96px}
-.grid li:nth-child(6n+3){grid-column:span 4}.grid li:nth-child(6n+4){grid-column:span 4;margin-top:48px}
-.grid li:nth-child(6n+5){grid-column:2/span 5}.grid li:nth-child(6n){grid-column:span 3;margin-top:96px}}
-.card{display:block}.card .im{position:relative;aspect-ratio:3/2}
+.grid{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:48px 16px}
+.card{display:block}.card .im{position:relative;aspect-ratio:1/1;overflow:hidden;background:#d6d2c6;border:2px solid var(--ink)}
 .card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s var(--ease)}
 .card .im img+img{opacity:0;transform:scale(1.9);transform-origin:var(--o,60% 60%)}.card:hover .im img:first-child,.card:focus-visible .im img:first-child{opacity:0}
 .card:hover .im img+img,.card:focus-visible .im img+img{opacity:1}
 .card p{display:flex;justify-content:space-between;margin-top:12px}
+/* shop controls, bag, extra home sections */
+.flt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px}
+.flt button,.sizes button{border:1.5px solid var(--ink);padding:6px 12px;transition:background .3s var(--ease),color .3s var(--ease)}
+.flt button:hover,.sizes button:hover{background:var(--signal)}
+.flt button[aria-pressed=true],.sizes button[aria-pressed=true]{background:var(--ink);color:var(--bone)}
+.sizes{display:flex;gap:6px;margin:12px 0 8px}.sizes button{padding:4px 9px}
+.add{width:100%;background:var(--ink);color:var(--bone);padding:10px;transition:background .4s var(--ease),color .4s var(--ease)}
+.add:hover{background:var(--signal);color:var(--ink)}
+.bag{border:1.5px solid var(--ink);padding:4px 10px}.bag:hover{background:var(--signal)}
+.perks{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));padding:0 16px 96px}
+.perks div{border-top:3px solid var(--ink);padding-top:12px}.perks b{display:block;font:400 2rem/1 var(--disp);text-transform:uppercase;margin-bottom:8px}
+.sec{padding:96px 16px;border-top:1px solid var(--ink)}
+.sec h2{font-size:clamp(3rem,9vw,8rem);margin-bottom:48px}
+.feat{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.feat button{display:block;text-align:left}.feat .im{display:block;aspect-ratio:1;overflow:hidden;background:#d6d2c6;border:2px solid var(--ink)}
+.feat img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}.feat button:hover img{transform:scale(1.08)}
+.feat .t{display:flex;justify-content:space-between;margin-top:10px}
+.steps{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));counter-reset:s}
+.steps div{counter-increment:s;border-top:3px solid var(--signal);padding-top:12px}
+.steps div::before{content:"0" counter(s);font:400 4rem/1 var(--disp)}
+.steps b{display:block;margin:8px 0 4px;text-transform:uppercase}
+.visit{display:grid;gap:48px}@media(min-width:768px){.visit{grid-template-columns:1fr 1fr}}
+.news{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.news input{font:inherit;padding:10px;border:1.5px solid var(--ink);background:transparent;flex:1;min-width:180px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translate(-50%,200%);background:var(--ink);color:var(--bone);padding:10px 16px;z-index:96;transition:transform .5s var(--ease)}#toast.show{transform:translate(-50%,0)}
+@media(max-width:767px){.hero{display:flex;flex-direction:column}#shoe{position:relative;right:auto;bottom:auto;width:100%;order:3;margin-top:32px}.blurb{order:2}}
 /* route wipe + cursor */
 #wipe{position:fixed;inset:0;z-index:80;background:var(--signal);transform:translateY(100%);pointer-events:none}
 #cur{position:fixed;left:0;top:0;z-index:95;pointer-events:none;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--signal);color:var(--ink);display:none;align-items:center;justify-content:center;transition:width .5s var(--ease),height .5s var(--ease),margin .5s var(--ease)}
@@ -68,7 +91,7 @@ footer{padding:16px;display:flex;justify-content:space-between;border-top:1px so
 <body>
 <div id="pre" role="status" aria-label="Loading"><span id="cnt">000</span><p id="logo" class="d">SNEAKO</p></div>
 <header><a href="#" class="d" data-go="home">SNEAKO</a>
-<nav aria-label="Main"><button data-go="home" aria-current="true">Home</button><button data-go="shop">Shop</button></nav></header>
+<nav aria-label="Main"><button data-go="home" aria-current="true">Home</button><button data-go="shop">Shop</button><button class="bag" id="bag">Bag (<span id="bagn">0</span>)</button></nav></header>
 <main>
 <div id="home" class="view on">
  <section class="hero">
@@ -78,11 +101,15 @@ footer{padding:16px;display:flex;justify-content:space-between;border-top:1px so
  </section>
  <div class="mq" aria-hidden="true"><div id="mq1" class="d"></div></div>
  <section class="about"><h2 class="d">Small shop.<br>Few pairs.</h2><p>We buy what we would wear. When a size is gone, it is gone. Come in, lace them up, walk around.</p></section>
+ <section class="perks"><div><b>Try first</b>Wear them in the shop before you pay.</div><div><b>Few pairs</b>Small batches. When a size is gone, it is gone.</div><div><b>Honest prices</b>No fake sales, no markups.</div></section>
+ <section class="sec"><h2 class="d">Fresh in</h2><div id="feat" class="feat"></div><p style="margin-top:32px"><button class="btn" data-go="shop">See the drop</button></p></section>
+ <section class="sec"><h2 class="d">How it works</h2><div class="steps"><div><b>Walk in</b>Browse the shelf and pick what catches your eye.</div><div><b>Lace up</b>Try any pair on and walk around the shop.</div><div><b>Decide</b>Love them? Pay and go. If not, no pressure.</div></div></section>
+ <section class="sec visit"><div><h2 class="d" style="margin-bottom:24px">Visit</h2><p>Your street address here<br>Open daily, 11:00 to 20:00</p></div><div><h2 class="d" style="margin-bottom:24px;font-size:clamp(2rem,5vw,4rem)">Next drop</h2><p>Get an email when new pairs land.</p><form class="news" id="news"><input type="email" required placeholder="you@email.com" aria-label="Email address"><button class="btn">Notify me</button></form><p id="newsmsg" role="status" style="margin-top:8px"></p></div></section>
 </div>
-<div id="shop" class="view"><section class="shop"><h1 class="d">The drop</h1><ul id="grid" class="grid"></ul></section></div>
+<div id="shop" class="view"><section class="shop"><h1 class="d">The drop</h1><div id="flt" class="flt" role="group" aria-label="Filter by brand"></div><ul id="grid" class="grid"></ul></section></div>
 </main>
 <footer><span>SNEAKO</span><span>Sneako. First drop.</span></footer>
-<div id="wipe" aria-hidden="true"></div><div id="cur" aria-hidden="true"></div>
+<div id="toast" role="status"></div><div id="wipe" aria-hidden="true"></div><div id="cur" aria-hidden="true"></div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -102,7 +129,7 @@ function done(){document.body.classList.add("ready")}
 /* hero parallax */
 let tx=0,ty=0,cx=0,cy=0;
 if(!reduced)addEventListener("mousemove",e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});
-(function loop(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;$("#shoe").style.transform=`translate(${cx*56}px,${cy*28}px) rotate(${cx*10}deg)`;requestAnimationFrame(loop)})();
+(function loop(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;$("#shoe").style.transform=`translate(${cx*24}px,${cy*14}px) rotate(${cx*1.5}deg)`;requestAnimationFrame(loop)})();
 /* marquee: reverses with scroll direction */
 const phrase="Try them on. <b>/</b> Then decide. <b>/</b> Twelve pairs. <b>/</b> ";
 $("#mq1").innerHTML=phrase.repeat(6);
@@ -113,8 +140,22 @@ if(!reduced)addEventListener("scroll",()=>{dir=scrollY>lastY?-1:1;lastY=scrollY}
 const shoes=[["Tarmac","Low 01",89,"1542291026-7eec264c27ff"],["Kiln","86",100,"1606107557195-0e29a4b5b4aa"],["Marrow","Runner",111,"1491553895911-0055eca6402d"],["Ledger","Hi",122,"1600185365483-26d7a4cc7519"],["Tarmac","Trainer",133,"1560769629-975ec94e6a86"],["Kiln","Mid",144,"1549298916-b41d501d3772"],["Marrow","Press",155,"1595950653106-6c9ebd614d3a"],["Ledger","Court",166,"1600269452121-4f2416e55c28"]];
 const photo=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=70`;
 const origins=["70% 60%","30% 70%","60% 30%","40% 50%"];
-$("#grid").innerHTML=shoes.map(([b,n,p,id],i)=>`<li><a href="#" class="card" data-cursor="VIEW"><div class="im" style="--o:${origins[i%4]}"><img loading="lazy" alt="${b} ${n} sneaker" src="${photo(id)}"><img loading="lazy" alt="${b} ${n} sneaker, close-up" src="${photo(id)}"></div><p><span>${b} ${n}</span><span>$${p}</span></p></a></li>`).join("");
+const sizes=[7,8,9,10,11];
+$("#grid").innerHTML=shoes.map(([b,n,p,id],i)=>`<li data-b="${b}"><a href="#" class="card" data-cursor="VIEW"><div class="im" style="--o:${origins[i%4]}"><img loading="lazy" alt="${b} ${n} sneaker" src="${photo(id)}"><img loading="lazy" alt="${b} ${n} sneaker, close-up" src="${photo(id)}"></div><p><span>${b} ${n}</span><span>$${p}</span></p></a><div class="sizes" role="group" aria-label="Size for ${b} ${n}">${sizes.map(z=>`<button type="button" aria-pressed="false">${z}</button>`).join("")}</div><button type="button" class="add">Add to bag</button></li>`).join("");
 $$(".card").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+$("#feat").innerHTML=shoes.slice(0,4).map(([b,n,p,id])=>`<button data-go="shop"><span class="im"><img loading="lazy" alt="${b} ${n} sneaker" src="${photo(id)}"></span><span class="t"><span>${b} ${n}</span><span>$${p}</span></span></button>`).join("");
+/* brand filter */
+$("#flt").innerHTML=["All",...new Set(shoes.map(x=>x[0]))].map((b,i)=>`<button type="button" aria-pressed="${i===0}">${b}</button>`).join("");
+$("#flt").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;$$("#flt button").forEach(x=>x.setAttribute("aria-pressed",x===t));$$("#grid li").forEach(li=>li.hidden=t.textContent!=="All"&&li.dataset.b!==t.textContent)});
+/* sizes + bag */
+let bag=0;const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2200)};
+$("#grid").addEventListener("click",e=>{const z=e.target.closest(".sizes button"),a=e.target.closest(".add");
+ if(z)z.parentNode.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===z));
+ if(a){const li=a.closest("li"),sel=li.querySelector(".sizes [aria-pressed=true]");
+  if(!sel)return toast("Pick a size first");
+  $("#bagn").textContent=++bag;toast("Added "+li.querySelector(".card p span").textContent+", size "+sel.textContent)}});
+$("#bag").addEventListener("click",()=>toast(bag?bag+" pair(s) in your bag. Checkout is not connected in this preview.":"Your bag is empty"));
+$("#news").addEventListener("submit",e=>{e.preventDefault();$("#newsmsg").textContent="You're on the list.";e.target.reset()});
 /* cursor */
 const cur=$("#cur");let px=-100,py=-100,qx=-100,qy=-100;
 addEventListener("mousemove",e=>{px=e.clientX;py=e.clientY;const t=e.target.closest("[data-cursor]");cur.classList.toggle("big",!!t);cur.textContent=t?t.dataset.cursor:""});
