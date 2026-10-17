@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SHOP NAME (preview)</title>
+<title>SNEAKO</title>
 <style>
 :root{--bone:#E4E1D8;--ink:#1B1B1A;--signal:#FF3D00;--ease:cubic-bezier(.76,0,.24,1);
 --disp:"Anton","Impact","Haettenschweiler","Arial Narrow Bold",sans-serif;--mono:ui-monospace,"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace}
@@ -31,7 +31,7 @@ nav [aria-current=true]{text-decoration:underline;text-decoration-color:var(--si
 .ln span{display:block;transform:translateY(105%);transition:transform 1s var(--ease);transition-delay:calc(var(--i)*.08s)}
 body.ready .ln span{transform:none}
 #shoe{position:absolute;right:-10vw;bottom:0;width:85vw;max-width:900px;z-index:1;will-change:transform}
-#shoe img,.ph{display:block;width:100%;aspect-ratio:3/2}
+#shoe img,.ph{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
 .blurb{position:relative;z-index:2;margin-top:48px;max-width:300px;display:flex;flex-direction:column;gap:12px}
 .btn{display:inline-block;width:fit-content;background:var(--ink);color:var(--bone);padding:8px 12px;transition:background .5s var(--ease),color .5s var(--ease)}
 .btn:hover{background:var(--signal);color:var(--ink)}
@@ -53,8 +53,8 @@ body.ready .ln span{transform:none}
 .grid li:nth-child(6n+3){grid-column:span 4}.grid li:nth-child(6n+4){grid-column:span 4;margin-top:48px}
 .grid li:nth-child(6n+5){grid-column:2/span 5}.grid li:nth-child(6n){grid-column:span 3;margin-top:96px}}
 .card{display:block}.card .im{position:relative;aspect-ratio:3/2}
-.card .im img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .5s var(--ease)}
-.card .im img+img{opacity:0}.card:hover .im img:first-child,.card:focus-visible .im img:first-child{opacity:0}
+.card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s var(--ease)}
+.card .im img+img{opacity:0;transform:scale(1.9);transform-origin:var(--o,60% 60%)}.card:hover .im img:first-child,.card:focus-visible .im img:first-child{opacity:0}
 .card:hover .im img+img,.card:focus-visible .im img+img{opacity:1}
 .card p{display:flex;justify-content:space-between;margin-top:12px}
 /* route wipe + cursor */
@@ -66,13 +66,13 @@ footer{padding:16px;display:flex;justify-content:space-between;border-top:1px so
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
 </style></head>
 <body>
-<div id="pre" role="status" aria-label="Loading"><span id="cnt">000</span><p id="logo" class="d">SHOP NAME</p></div>
-<header><a href="#" class="d" data-go="home">SHOP NAME</a>
+<div id="pre" role="status" aria-label="Loading"><span id="cnt">000</span><p id="logo" class="d">SNEAKO</p></div>
+<header><a href="#" class="d" data-go="home">SNEAKO</a>
 <nav aria-label="Main"><button data-go="home" aria-current="true">Home</button><button data-go="shop">Shop</button></nav></header>
 <main>
 <div id="home" class="view on">
  <section class="hero">
-  <div id="shoe"><img id="heroimg" alt="Placeholder for the first sneaker of the drop"></div>
+  <div id="shoe"><img id="heroimg" alt="White sneaker on a dark background"></div>
   <h1 class="d"><span class="ln"><span style="--i:0">Twelve pairs.</span></span><span class="ln"><span style="--i:1">Try them on.</span></span><span class="ln"><span style="--i:2">Then decide.</span></span></h1>
   <div class="blurb"><p>First drop. Twelve sneakers, a few sizes each. Wear them in the shop before you pay.</p><button class="btn" data-go="shop">See the drop</button></div>
  </section>
@@ -81,14 +81,14 @@ footer{padding:16px;display:flex;justify-content:space-between;border-top:1px so
 </div>
 <div id="shop" class="view"><section class="shop"><h1 class="d">The drop</h1><ul id="grid" class="grid"></ul></section></div>
 </main>
-<footer><span>SHOP NAME</span><span>Preview build. Placeholder images and data.</span></footer>
+<footer><span>SNEAKO</span><span>Sneako. First drop.</span></footer>
 <div id="wipe" aria-hidden="true"></div><div id="cur" aria-hidden="true"></div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; // cubic in-out, matches the wipe feel
 const ph=(bg,fg,t)=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='1200' height='800' fill='${bg}'/><text x='600' y='410' fill='${fg}' font-family='monospace' font-size='28' text-anchor='middle'>${t}</text></svg>`);
-$("#heroimg").src=ph("#1B1B1A","#E4E1D8","PLACEHOLDER 1200x800");
+$("#heroimg").src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=1200&q=70";
 /* preloader: counter and logo mask share one value */
 function done(){document.body.classList.add("ready")}
 (function(){const pre=$("#pre");if(reduced){pre.remove();return done()}
@@ -110,8 +110,10 @@ let mx=0,dir=-1,lastY=scrollY;
 if(!reduced)addEventListener("scroll",()=>{dir=scrollY>lastY?-1:1;lastY=scrollY},{passive:true});
 (function mq(){const el=$("#mq1"),w=el.scrollWidth/2;if(!reduced){mx+=dir*1.4;if(mx<-w)mx+=w;if(mx>0)mx-=w}el.style.transform=`translateX(${mx}px)`;requestAnimationFrame(mq)})();
 /* shop grid: second image shows on hover */
-const shoes=[["Tarmac","Low 01",89],["Kiln","86",100],["Marrow","Runner",111],["Ledger","Hi",122],["Tarmac","Trainer",133],["Kiln","Mid",144],["Marrow","Press",155],["Ledger","Court",166]];
-$("#grid").innerHTML=shoes.map(([b,n,p])=>`<li><a href="#" class="card" data-cursor="VIEW"><div class="im"><img alt="${b} ${n}, side view" src="${ph("#1B1B1A","#E4E1D8",b+" "+n)}"><img alt="${b} ${n}, alternate angle" src="${ph("#FF3D00","#1B1B1A","ALT ANGLE")}"></div><p><span>${b} ${n}</span><span>$${p}</span></p></a></li>`).join("");
+const shoes=[["Tarmac","Low 01",89,"1542291026-7eec264c27ff"],["Kiln","86",100,"1606107557195-0e29a4b5b4aa"],["Marrow","Runner",111,"1491553895911-0055eca6402d"],["Ledger","Hi",122,"1600185365483-26d7a4cc7519"],["Tarmac","Trainer",133,"1560769629-975ec94e6a86"],["Kiln","Mid",144,"1549298916-b41d501d3772"],["Marrow","Press",155,"1595950653106-6c9ebd614d3a"],["Ledger","Court",166,"1600269452121-4f2416e55c28"]];
+const photo=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=70`;
+const origins=["70% 60%","30% 70%","60% 30%","40% 50%"];
+$("#grid").innerHTML=shoes.map(([b,n,p,id],i)=>`<li><a href="#" class="card" data-cursor="VIEW"><div class="im" style="--o:${origins[i%4]}"><img loading="lazy" alt="${b} ${n} sneaker" src="${photo(id)}"><img loading="lazy" alt="${b} ${n} sneaker, close-up" src="${photo(id)}"></div><p><span>${b} ${n}</span><span>$${p}</span></p></a></li>`).join("");
 $$(".card").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
 /* cursor */
 const cur=$("#cur");let px=-100,py=-100,qx=-100,qy=-100;
