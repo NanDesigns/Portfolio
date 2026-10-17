@@ -19,7 +19,11 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nan Designs | Freelance Web Designer">
 <meta property="og:description" content="Your brand deserves better than a template.">
-<meta property="og:image" content="https://your-site.com/preview.jpg">
+<meta property="og:url" content="https://nandesigns.github.io/Portfolio/">
+<meta property="og:image" content="https://nandesigns.github.io/Portfolio/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Unbounded:wght@700;800&display=swap" rel="stylesheet">
@@ -103,7 +107,8 @@ nav a{text-decoration:none;font-weight:700}nav a:hover{text-decoration:underline
 .card:hover .thumb{box-shadow:12px 12px 0 var(--blue)}
 .bar{display:flex;gap:6px;align-items:center;height:30px;padding:0 12px;border-bottom:var(--b);background:var(--yellow)}
 .bar i{width:9px;height:9px;border-radius:50%;background:#111}
-.pic{aspect-ratio:3/2;overflow:hidden;background:#ddd}
+.pic{position:relative;aspect-ratio:3/2;overflow:hidden;background:#ddd}
+.pic iframe{position:absolute;left:0;top:0;width:1280px;height:853px;border:0;pointer-events:none;transform-origin:0 0;background:#fff}
 .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.card:hover .pic img{transform:scale(1.08)}
 .visit{position:absolute;right:1rem;bottom:1rem;background:var(--coral);color:var(--on);border:var(--b);font-weight:800;padding:.35rem .9rem;border-radius:99px;transform:scale(0) rotate(-12deg);transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
 .card:hover .visit,.card:focus-visible .visit{transform:scale(1) rotate(-4deg)}
@@ -318,7 +323,7 @@ const CONFIG = { email:"spiritzop451@gmail.com", fiverr:"https://www.fiverr.com/
 const PROJECTS = [
   { title:"Tambdi",         category:"Restaurant", desc:"A warm, story-led site for a Goan kitchen in Bandra.",   img:"", url:"tambdi/",   tech:"HTML, CSS, JavaScript" },
   { title:"SEDI Jewellery", category:"E-commerce", desc:"A refined, luxury Italian jewellery maison online.",     img:"", url:"sedi/",     tech:"HTML, CSS, JavaScript" },
-  { title:"Sneaker Shop",   category:"E-commerce", desc:"A bold, animated storefront for a small sneaker drop.", img:"", url:"sneakers/", tech:"HTML, CSS, JavaScript" }
+  { title:"Sneako",         category:"E-commerce", desc:"A bold, animated storefront for a small sneaker drop.", img:"", url:"sneakers/", tech:"HTML, CSS, JavaScript" }
 ];
 const STATS = [ {n:3,s:"+",l:"Sites launched"}, {n:100,s:"%",l:"Custom, zero templates"}, {n:24,s:"h",l:"Typical reply time"} ];
 const TESTIMONIALS = [
@@ -384,6 +389,8 @@ function thumbSrc(p,i){ // own screenshot wins; else a free live screenshot of t
   if(!/^https?:$/.test(u.protocol)||/^(localhost|127\.)/.test(u.hostname))return placeholder(p,i);
   return "https://image.thum.io/get/width/1200/crop/800/"+u.href}
 
+function sameSite(u){try{const x=new URL(u,location.href);return /^https?:$/.test(x.protocol)&&x.origin===location.origin}catch(e){return false}}
+
 /* Project cards (textContent only, so no HTML injection) */
 const grid=$("#grid");
 PROJECTS.forEach((p,i)=>{const a=document.createElement("a");
@@ -391,6 +398,10 @@ PROJECTS.forEach((p,i)=>{const a=document.createElement("a");
   a.innerHTML=`<div class="thumb"><span class="bar"><i></i><i></i><i></i></span><div class="pic"><img loading="lazy" width="600" height="400"></div><span class="visit">Visit site ↗</span></div><div class="meta"><h3></h3><span></span></div><p></p><small></small>`;
   const img=a.querySelector("img");img.src=thumbSrc(p,i);img.alt=`Screenshot of the ${p.title} website`;
   img.onerror=()=>{img.onerror=null;img.src=placeholder(p,i)};
+  /* Sites hosted in this same repo get a LIVE preview: the real page, shrunk to fit the card */
+  if(!p.img&&sameSite(p.url)){const f=document.createElement("iframe"),pic=a.querySelector(".pic");
+    f.src=p.url;f.loading="lazy";f.tabIndex=-1;f.title="Live preview of "+p.title;f.setAttribute("aria-hidden","true");f.setAttribute("scrolling","no");
+    pic.replaceChildren(f);const fit=()=>f.style.transform=`scale(${pic.clientWidth/1280})`;fit();new ResizeObserver(fit).observe(pic)}
   a.querySelector("h3").textContent=p.title;a.querySelector(".meta span").textContent=p.category;
   a.querySelector("p").textContent=p.desc;a.querySelector("small").textContent=p.tech;grid.append(a)});
 
